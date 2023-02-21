@@ -1,16 +1,20 @@
 package com.example.week83.component;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.*;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 @Component
 @RefreshScope
+@ConfigurationProperties(prefix = "student")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Student {
-    @Value("${student.name}")
     private String name;
+    private int age;
+    private String major;
 }
