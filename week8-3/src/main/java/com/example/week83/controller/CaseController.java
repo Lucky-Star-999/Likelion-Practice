@@ -11,12 +11,6 @@ public class CaseController {
     @Autowired
     private CaseService caseService;
 
-    // This case is to change a value in property file using Actuator
-    @GetMapping("/actuator")
-    public String actuator() {
-        return caseService.actuator();
-    }
-
     // This case is to read values in property file
     @GetMapping("/properties")
     public String readPropertiesFile() {
