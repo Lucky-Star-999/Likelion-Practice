@@ -25,7 +25,6 @@ public class ChatController {
     @SendTo("/topic/public")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
         chatHistoryList.getChatHistoryList().add(new ChatHistory(chatMessage.getContent(), chatMessage.getSender()));
-        System.out.println(chatHistoryList);
         chatMessage.setChatHistoryList(chatHistoryList);
         return chatMessage;
     }
@@ -35,7 +34,7 @@ public class ChatController {
     public ChatMessage addUser(@Payload ChatMessage chatMessage,
                                SimpMessageHeaderAccessor headerAccessor) {
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        System.out.println("addUser(): " + chatMessage);
+        chatMessage.setChatHistoryList(chatHistoryList);
         return chatMessage;
     }
 }

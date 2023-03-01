@@ -48,29 +48,72 @@ function sendMessage(event) {
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
 
-    // Modified
-    console.log(message);
-    //
-
-    var messageElement = document.createElement('li');
+    //var messageElement = document.createElement('li');
     if (message.type === 'JOIN') {
-        messageElement.classList.add('event-message');
+        //messageElement.classList.add('event-message');
         message.content = message.sender + ' joined!';
+
+        // Modified
+        console.log(message.chatHistoryList);
+        renderElement(message, 'event-message', null, null); // Render the "Join introduction first"
+
+        // Render old messages
+        console.log(username);
+        console.log(message.sender);
+        if (username === message.sender) {
+           for (let i=0; i<message.chatHistoryList.chatHistoryList.length; i++) {
+              addMessage(message.chatHistoryList.chatHistoryList[i]);
+           }
+        }
+
+
+
+
+        //
+
+
+
     } else if (message.type === 'LEAVE') {
-        messageElement.classList.add('event-message');
+        //messageElement.classList.add('event-message');
         message.content = message.sender + ' left!';
+
+        // Modify
+        renderElement(message, 'event-message', null, null);
     } else {
-        messageElement.classList.add('chat-message');
+        //messageElement.classList.add('chat-message');
         var avatarElement = document.createElement('i');
         var avatarText = document.createTextNode(message.sender[0]);
         avatarElement.appendChild(avatarText);
         avatarElement.style['background-color'] = getAvatarColor(message.sender);
-        messageElement.appendChild(avatarElement);
+        //messageElement.appendChild(avatarElement);
         var usernameElement = document.createElement('span');
         var usernameText = document.createTextNode(message.sender);
         usernameElement.appendChild(usernameText);
+        //messageElement.appendChild(usernameElement);
+
+        // Modify
+        renderElement(message, 'chat-message', avatarElement, usernameElement);
+    }
+    /*var textElement = document.createElement('p');
+    var messageText = document.createTextNode(message.content);
+    textElement.appendChild(messageText);
+    messageElement.appendChild(textElement);
+    messageArea.appendChild(messageElement);
+    messageArea.scrollTop = messageArea.scrollHeight;*/
+
+
+}
+
+// Modify ...
+function renderElement(message, type, avatarElement, usernameElement) {
+    var messageElement = document.createElement('li');
+    messageElement.classList.add(type);
+
+    if (type === 'chat-message') {
+        messageElement.appendChild(avatarElement);
         messageElement.appendChild(usernameElement);
     }
+
     var textElement = document.createElement('p');
     var messageText = document.createTextNode(message.content);
     textElement.appendChild(messageText);
@@ -78,6 +121,20 @@ function onMessageReceived(payload) {
     messageArea.appendChild(messageElement);
     messageArea.scrollTop = messageArea.scrollHeight;
 }
+
+function addMessage(message) {
+    var avatarElement = document.createElement('i');
+    var avatarText = document.createTextNode(message.sender[0]);
+    avatarElement.appendChild(avatarText);
+    avatarElement.style['background-color'] = getAvatarColor(message.sender);
+    var usernameElement = document.createElement('span');
+    var usernameText = document.createTextNode(message.sender);
+    usernameElement.appendChild(usernameText);
+
+    renderElement(message, 'chat-message', avatarElement, usernameElement);
+}
+//
+
 
 function getAvatarColor(messageSender) {
     var hash = 0;
