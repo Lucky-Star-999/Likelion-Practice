@@ -28,6 +28,6 @@ public class TestController {
         redisList.add("Element 2");
         redisList.add("Element 3");
         redisTemplate.opsForList().rightPushAll("redisList", redisList);
-        return (List<String>) redisTemplate.opsForList().range("redisList", 0, 2);
+        return (List<String>) redisTemplate.opsForList().range("redisList", 0, -1);
     }
 }
