@@ -5,11 +5,15 @@ import com.example.hellojwt2.dto.LoginResponse;
 import com.example.hellojwt2.security.CustomUserDetails;
 import com.example.hellojwt2.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 
 @RestController
@@ -48,4 +52,15 @@ public class WebController {
     public String randomStuff() {
         return "JWT Hợp lệ mới có thể thấy được message này";
     }
+
+    @GetMapping("/admin/hello")
+    public String helloAdmin() {
+        return "Admin mới vào được đây";
+    }
+
+    @GetMapping("/customer/hello")
+    public String helloCustomer() {
+        return "Customer mới vào được đây";
+    }
+
 }

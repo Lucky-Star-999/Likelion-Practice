@@ -57,6 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/login/**").permitAll()
+                .antMatchers("/api/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/api/customer/**").hasAnyAuthority("ADMIN", "CUSTOMER")
                 .anyRequest().authenticated();
 
         // Thêm một lớp Filter kiểm tra jwt
